@@ -9,6 +9,8 @@ import { useContext } from 'react'
 // import { TransactionContext } from '../context/TransactionContext'
 // import { client } from '../lib/sanityClient'
 
+const style = {}
+
 export const Header = () => {
   return <div>Header</div>
 }
