@@ -42,7 +42,28 @@ export const Header = () => {
           Swap
         </div>
 
-        <div className={`${style}`}></div>
+        <div
+          onClick={() => setSelectedNav('pool')}
+          className={`${style.navItem} ${
+            selectedNav === 'pool' && style.activeNavItem
+          }`}
+        >
+          Pool
+        </div>
+
+        <div
+          onClick={() => setSelectedNav('vote')}
+          className={`${style.navItem} ${
+            selectedNav === 'vote' && style.activeNavItem
+          }`}
+        >
+          Vote
+        </div>
+        <a href="https://info.uniswap.org/#/" target="_blank" rel="noreferrer">
+          <div className={style.navItem}>
+            Charts <FiArrowUpRight />
+          </div>
+        </a>
       </div>
     </div>
   )
