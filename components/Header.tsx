@@ -9,7 +9,20 @@ import { useContext } from 'react'
 // import { TransactionContext } from '../context/TransactionContext'
 // import { client } from '../lib/sanityClient'
 
-const style = {}
+const style = {
+  wrapper: `p-4 w-screen flex justify-between items-center`,
+  headerLogo: `flex w-1/4 items-center justify-start`,
+  nav: `flex-1 flex justify-center items-center`,
+  navItemsContainer: `flex bg-[#191B1F] rounded-3xl`,
+  navItem: `px-4 py-2 m-1 flex items-center text-lg font-semibold text-[0.9rem] cursor-pointer rounded-3xl`,
+  activeNavItem: `bg-[#20242A]`,
+  buttonsContainer: `flex w-1/4 justify-end items-center`,
+  button: `flex items-center bg-[#191B1F] rounded-2xl mx-2 text-[0.9rem] font-semibold cursor-pointer`,
+  buttonPadding: `p-2`,
+  buttonTextContainer: `h-8 flex items-center`,
+  buttonIconContainer: `flex items-center justify-center w-8 h-8`,
+  buttonAccent: `bg-[#172A42] border border-[#163256] hover:border-[#234169] h-full rounded-2xl flex items-center justify-center text-[#4F90EA]`,
+}
 
 export const Header = () => {
   const [selectedNav, setSelectedNav] = useState('swap')
@@ -17,7 +30,19 @@ export const Header = () => {
   return (
     <div className={style.wrapper}>
       <div className={style.headerLogo}>
-        <img src={uniswapLogo} alt="uniswap" height={40} width={40} />
+        <Image src={uniswapLogo} alt="uniswap" height={40} width={40} />
+      </div>
+      <div className={style.navItemsContainer}>
+        <div
+          onClick={() => setSelectedNav('swap')}
+          className={`${style.navItem} ${
+            selectedNav === 'swap' && style.activeNavItem
+          }`}
+        >
+          Swap
+        </div>
+
+        <div className={`${style}`}></div>
       </div>
     </div>
   )
