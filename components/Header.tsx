@@ -32,38 +32,49 @@ export const Header = () => {
       <div className={style.headerLogo}>
         <Image src={uniswapLogo} alt="uniswap" height={40} width={40} />
       </div>
-      <div className={style.navItemsContainer}>
-        <div
-          onClick={() => setSelectedNav('swap')}
-          className={`${style.navItem} ${
-            selectedNav === 'swap' && style.activeNavItem
-          }`}
-        >
-          Swap
-        </div>
-
-        <div
-          onClick={() => setSelectedNav('pool')}
-          className={`${style.navItem} ${
-            selectedNav === 'pool' && style.activeNavItem
-          }`}
-        >
-          Pool
-        </div>
-
-        <div
-          onClick={() => setSelectedNav('vote')}
-          className={`${style.navItem} ${
-            selectedNav === 'vote' && style.activeNavItem
-          }`}
-        >
-          Vote
-        </div>
-        <a href="https://info.uniswap.org/#/" target="_blank" rel="noreferrer">
-          <div className={style.navItem}>
-            Charts <FiArrowUpRight />
+      <div className={style.nav}>
+        <div className={style.navItemsContainer}>
+          <div
+            onClick={() => setSelectedNav('swap')}
+            className={`${style.navItem} ${
+              selectedNav === 'swap' && style.activeNavItem
+            }`}
+          >
+            Swap
           </div>
-        </a>
+          <div
+            onClick={() => setSelectedNav('pool')}
+            className={`${style.navItem} ${
+              selectedNav === 'pool' && style.activeNavItem
+            }`}
+          >
+            Pool
+          </div>
+          <div
+            onClick={() => setSelectedNav('vote')}
+            className={`${style.navItem} ${
+              selectedNav === 'vote' && style.activeNavItem
+            }`}
+          >
+            Vote
+          </div>
+          <a
+            href="https://info.uniswap.org/#/"
+            target="_blank"
+            rel="noreferrer"
+          >
+            <div className={style.navItem}>
+              Charts <FiArrowUpRight />
+            </div>
+          </a>
+        </div>
+      </div>
+      <div className={style.buttonsContainer}>
+        <div className={`${style.button} ${style.buttonPadding}`}>
+          <div className={style.buttonIconContainer}>
+            <Image src={ethLogo} alt="eth logo" />
+          </div>
+        </div>
       </div>
     </div>
   )
