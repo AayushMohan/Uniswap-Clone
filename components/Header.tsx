@@ -12,5 +12,13 @@ import { useContext } from 'react'
 const style = {}
 
 export const Header = () => {
-  return <div>Header</div>
+  const [selectedNav, setSelectedNav] = useState('swap')
+
+  return (
+    <div className={style.wrapper}>
+      <div className={style.headerLogo}>
+        <img src={uniswapLogo} alt="uniswap" height={40} width={40} />
+      </div>
+    </div>
+  )
 }
