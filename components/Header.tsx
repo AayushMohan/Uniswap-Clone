@@ -74,6 +74,7 @@ export const Header = () => {
           <div className={style.buttonIconContainer}>
             <Image src={ethLogo} alt="eth logo" />
           </div>
+          <p>Ethereum</p>
         </div>
       </div>
     </div>
