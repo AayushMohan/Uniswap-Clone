@@ -24,8 +24,31 @@ const style = {
   buttonAccent: `bg-[#172A42] border border-[#163256] hover:border-[#234169] h-full rounded-2xl flex items-center justify-center text-[#4F90EA]`,
 }
 
-export const Header = () => {
+const Header = () => {
   const [selectedNav, setSelectedNav] = useState('swap')
+  const [userName, setUserName] = useState<string>()
+  const { connectWallet, currentAccount } = useContext(TransactionContext)
+
+  useEffect(() => {
+    if (currentAccount) {
+      ;(async () => {
+        const query = `
+        *[_type=="users" && _id == "${currentAccount}"] {
+          userName,
+        }
+        `
+        const clientRes = await client.fetch(query)
+
+        if (!(clientRes[0].userName == 'Unnamed')) {
+          setUserName(clientRes[0].userName)
+        } else {
+          setUserName(
+            `${currentAccount.slice(0, 7)}...${currentAccount.slice(35)}`
+          )
+        }
+      })()
+    }
+  }, [currentAccount])
 
   return (
     <div className={style.wrapper}>
@@ -72,23 +95,27 @@ export const Header = () => {
       <div className={style.buttonsContainer}>
         <div className={`${style.button} ${style.buttonPadding}`}>
           <div className={style.buttonIconContainer}>
-            <Image src={ethLogo} alt="eth logo" />
+            <Image src={ethLogo} alt="eth logo" height={20} width={20} />
           </div>
           <p>Ethereum</p>
           <div className={style.buttonIconContainer}>
             <AiOutlineDown />
           </div>
         </div>
-
-        <div
-          onclick={() => connectWallet()}
-          className={`${style.button} ${style.buttonPadding}`}
-        >
-          <div className={`${style.buttonAccent} ${style.buttonPadding}`}>
-            Connect Wallet
+        {currentAccount ? (
+          <div className={`${style.button} ${style.buttonPadding}`}>
+            <div className={style.buttonTextContainer}>{userName}</div>
           </div>
-        </div>
-
+        ) : (
+          <div
+            onClick={() => connectWallet()}
+            className={`${style.button} ${style.buttonPadding}`}
+          >
+            <div className={`${style.buttonAccent} ${style.buttonPadding}`}>
+              Connect Wallet
+            </div>
+          </div>
+        )}
         <div className={`${style.button} ${style.buttonPadding}`}>
           <div className={`${style.buttonIconContainer} mx-2`}>
             <HiOutlineDotsVertical />
@@ -98,3 +125,5 @@ export const Header = () => {
     </div>
   )
 }
+
+export default Header
