@@ -6,6 +6,7 @@ import { HiOutlineDotsVertical } from 'react-icons/hi'
 import ethLogo from '../assets/eth.png'
 import uniswapLogo from '../assets/uniswap.png'
 import { useContext } from 'react'
+import { TransactionContext } from '../context/TransactionContext'
 // import { TransactionContext } from '../context/TransactionContext'
 // import { client } from '../lib/sanityClient'
 
