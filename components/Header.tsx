@@ -79,6 +79,15 @@ export const Header = () => {
             <AiOutlineDown />
           </div>
         </div>
+
+        <div
+          onclick={() => connectWallet()}
+          className={`${style.button} ${style.buttonPadding}`}
+        >
+          <div className={`${style.buttonAccent} ${style.buttonPadding}`}>
+            Connect Wallet
+          </div>
+        </div>
       </div>
     </div>
   )
