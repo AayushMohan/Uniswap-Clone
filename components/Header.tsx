@@ -88,6 +88,12 @@ export const Header = () => {
             Connect Wallet
           </div>
         </div>
+
+        <div className={`${style.button} ${style.buttonPadding}`}>
+          <div className={`${style.buttonIconContainer} mx-2`}>
+            <HiOutlineDotsVertical />
+          </div>
+        </div>
       </div>
     </div>
   )
