@@ -1,3 +1,4 @@
+import { Main } from 'next/document'
 import Head from 'next/head'
 import { Header } from '../components/Header'
 
@@ -9,7 +10,7 @@ export default function Home() {
   return (
     <div className={style.wrapper}>
       <Header />
-      <h2>Main</h2>
+      <Main />
       <h2>Transaction History</h2>
     </div>
   )
