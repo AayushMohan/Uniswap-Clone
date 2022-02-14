@@ -22,6 +22,17 @@ export const TransactionProvider = ({ children }) => {
     }
   }
 
+  const checkIfWalletIsConnected = async (metamask = eth) => {
+    try{
+      if (!metamask) return alert('Please install metamask')
+      const accounts = await metamask.request({ method: 'eth_accounts' })
+      
+      if (accounts.length) {
+        setCurrentAccount(accounts[0])
+      }
+    }
+  }
+
   return (
     <TransactionContext.Provider value={{ currentAccount, connectWallet }}>
       {children}

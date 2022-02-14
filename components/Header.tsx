@@ -1,13 +1,11 @@
+import React, { useState, useEffect, useContext } from 'react'
 import Image from 'next/image'
-import { useEffect, useState } from 'react'
 import { FiArrowUpRight } from 'react-icons/fi'
 import { AiOutlineDown } from 'react-icons/ai'
 import { HiOutlineDotsVertical } from 'react-icons/hi'
 import ethLogo from '../assets/eth.png'
 import uniswapLogo from '../assets/uniswap.png'
-import { useContext } from 'react'
 import { TransactionContext } from '../context/TransactionContext'
-// import { TransactionContext } from '../context/TransactionContext'
 // import { client } from '../lib/sanityClient'
 
 const style = {
@@ -29,6 +27,8 @@ const Header = () => {
   const [selectedNav, setSelectedNav] = useState('swap')
   const [userName, setUserName] = useState<string>()
   const { connectWallet, currentAccount } = useContext(TransactionContext)
+
+  console.log({ connectWallet, currentAccount })
 
   useEffect(() => {
     if (currentAccount) {
