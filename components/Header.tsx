@@ -28,8 +28,6 @@ const Header = () => {
   const [userName, setUserName] = useState<string>()
   const { connectWallet, currentAccount } = useContext(TransactionContext)
 
-  console.log({ connectWallet, currentAccount })
-
   useEffect(() => {
     if (currentAccount) {
       ;(async () => {
