@@ -2,6 +2,7 @@ import Image from 'next/image'
 import { RiSettings3Fill } from 'react-icons/ri'
 import { AiOutlineDown } from 'react-icons/ai'
 import ethLogo from '../assets/eth.png'
+import { TransactionContext } from '../context/TransactionContext'
 import { useContext } from 'react'
 import { useRouter } from 'next/router'
 
@@ -20,6 +21,8 @@ const style = {
 }
 
 const Main = () => {
+  const { formData, handleChange, handleSubmit } =
+    useContext(TransactionContext)
   return (
     <div className={style.wrapper}>
       <div className={style.content}>
