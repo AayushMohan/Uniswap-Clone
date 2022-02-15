@@ -4,7 +4,7 @@ import { AiOutlineDown } from 'react-icons/ai'
 import ethLogo from '../assets/eth.png'
 import { TransactionContext } from '../context/TransactionContext'
 import { useContext } from 'react'
-import { useRouter } from 'next/router'
+// import { useRouter } from 'next/router'
 
 const style = {
   wrapper: `w-screen flex items-center justify-center mt-14`,
@@ -21,8 +21,18 @@ const style = {
 }
 
 const Main = () => {
-  const { formData, handleChange, handleSubmit } =
+  const { formData, handleChange, sendTransaction } =
     useContext(TransactionContext)
+
+  const handleSubmit = async (e) => {
+    const { addressTo, amount } = formData
+    e.preventDefault()
+
+    if (addressTo || amount) return
+
+    sendTransaction()
+  }
+
   return (
     <div className={style.wrapper}>
       <div className={style.content}>
