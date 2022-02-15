@@ -10,6 +10,12 @@ if (typeof window !== 'undefined') {
 
 export const TransactionProvider = ({ children }) => {
   const [currentAccount, setCurrentAccount] = useState()
+  const [isLoading, setIsLoading] = useState(false)
+  // const router = useRouter()
+  const [formData, setFormData] = useState({
+    addressTo: '',
+    amount: '',
+  })
 
   const connectWallet = async (metamask = eth) => {
     try {
@@ -79,12 +85,13 @@ export const TransactionProvider = ({ children }) => {
 
       await transactionHash.wait()
 
-      await saveTransaction(
-        transactionHash.hash,
-        amount,
-        connectedAccount,
-        addressTo
-      )
+      // DB
+      // await sendTransaction(
+      //   transactionHash.hash,
+      //   amount,
+      //   connectedAccount,
+      //   addressTo
+      // )
 
       setIsLoading(false)
     } catch (error) {
@@ -96,8 +103,14 @@ export const TransactionProvider = ({ children }) => {
     checkIfWalletIsConnected()
   }, [])
 
+  const handleChange = (e, name) => {
+    setFormData(prev)
+  }
+
   return (
-    <TransactionContext.Provider value={{ currentAccount, connectWallet }}>
+    <TransactionContext.Provider
+      value={{ currentAccount, connectWallet, sendTransaction }}
+    >
       {children}
     </TransactionContext.Provider>
   )
