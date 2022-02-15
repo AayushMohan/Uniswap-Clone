@@ -11,10 +11,6 @@ if (typeof window !== 'undefined') {
 export const TransactionProvider = ({ children }) => {
   const [currentAccount, setCurrentAccount] = useState()
 
-  useEffect(() => {
-    checkIfWalletIsConnected()
-  }, [])
-
   const connectWallet = async (metamask = eth) => {
     try {
       if (!metamask) return alert('Please install metamask ')
@@ -95,6 +91,10 @@ export const TransactionProvider = ({ children }) => {
       console.log(error)
     }
   }
+
+  useEffect(() => {
+    checkIfWalletIsConnected()
+  }, [])
 
   return (
     <TransactionContext.Provider value={{ currentAccount, connectWallet }}>

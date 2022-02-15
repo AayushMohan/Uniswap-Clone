@@ -25,7 +25,7 @@ const style = {
 
 const Header = () => {
   const [selectedNav, setSelectedNav] = useState('swap')
-  const [userName, setUserName] = useState<string>()
+  const [userName, setUserName] = useState('')
   const { connectWallet, currentAccount } = useContext(TransactionContext)
 
   useEffect(() => {
