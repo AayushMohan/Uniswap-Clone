@@ -104,7 +104,7 @@ export const TransactionProvider = ({ children }) => {
   }, [])
 
   const handleChange = (e, name) => {
-    setFormData(prev)
+    setFormData((prevState) => ({ ...prevState, [name]: e.target.value }))
   }
 
   return (
