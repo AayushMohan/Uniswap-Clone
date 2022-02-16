@@ -29,25 +29,11 @@ const Header = () => {
   const { connectWallet, currentAccount } = useContext(TransactionContext)
 
   useEffect(() => {
-    if (currentAccount) {
-      ;(async () => {
-        const query = `
-        *[_type=="users" && _id == "${currentAccount}"] {
-          userName,
-        }
-        `
-        const clientRes = await client.fetch(query)
-
-        if (!(clientRes[0].userName == 'Unnamed')) {
-          setUserName(clientRes[0].userName)
-        } else {
-          setUserName(
-            `${currentAccount.slice(0, 7)}...${currentAccount.slice(35)}`
-          )
-        }
-      })()
-    }
+    if (!currentAccount) return
+    setUserName(`${currentAccount.slice(0, 7)}...${currentAccount.slice(35)}`)
   }, [currentAccount])
+
+  console.log({ connectWallet, currentAccount })
 
   return (
     <div className={style.wrapper}>
