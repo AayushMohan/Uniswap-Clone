@@ -6,6 +6,7 @@
     "start": "next start"
   },
   "dependencies": {
+    "@emotion/react": "^11.7.1",
     "@sanity/client": "^3.0.6",
     "ethers": "^5.5.4",
     "next": "latest",
