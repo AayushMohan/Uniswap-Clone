@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { contractABI, contractAddress } from '../lib/constants'
 import { ethers } from 'ethers'
+import { client } from '../lib/sanityClient'
 import { useRouter } from 'next/router'
 
 export const TransactionContext = React.createContext()
@@ -32,34 +33,43 @@ export const TransactionProvider = ({ children }) => {
     amount: '',
   })
 
-  // Trigger Loading Modal
+  /**
+   * Trigger loading modal
+   */
   useEffect(() => {
     if (isLoading) {
-      router.push(`/?loading={currentAccount}`)
+      router.push(`/?loading=${currentAccount}`)
     } else {
       router.push(`/`)
     }
   }, [isLoading])
 
-  const connectWallet = async (metamask = eth) => {
-    try {
-      if (!metamask) return alert('Please install metamask ')
+  /**
+   * Create user profile in Sanity
+   */
+  useEffect(() => {
+    if (!currentAccount) return
+    ;(async () => {
+      const userDoc = {
+        _type: 'users',
+        _id: currentAccount,
+        userName: 'Unnamed',
+        address: currentAccount,
+      }
 
-      const accounts = await metamask.request({ method: 'eth_requestAccounts' })
+      await client.createIfNotExists(userDoc)
+    })()
+  }, [currentAccount])
 
-      setCurrentAccount(accounts[0])
-    } catch (error) {
-      console.error(error)
-      throw new Error('No ethereum object.')
-    }
+  const handleChange = (e, name) => {
+    setFormData((prevState) => ({ ...prevState, [name]: e.target.value }))
   }
 
   /**
-   * Executes a transaction
+   * Checks if MetaMask is installed and an account is connected
    * @param {*} metamask Injected MetaMask code from the browser
-   * @param {string} currentAccount Current user's address
+   * @returns
    */
-
   const checkIfWalletIsConnected = async (metamask = eth) => {
     try {
       if (!metamask) return alert('Please install metamask ')
@@ -75,6 +85,69 @@ export const TransactionProvider = ({ children }) => {
     }
   }
 
+  /**
+   * Prompts user to connect their MetaMask wallet
+   * @param {*} metamask Injected MetaMask code from the browser
+   */
+  const connectWallet = async (metamask = eth) => {
+    try {
+      if (!metamask) return alert('Please install metamask ')
+
+      const accounts = await metamask.request({ method: 'eth_requestAccounts' })
+
+      setCurrentAccount(accounts[0])
+    } catch (error) {
+      console.error(error)
+      throw new Error('No ethereum object.')
+    }
+  }
+
+  /**
+   * Saves transaction to Sanity DB
+   * @param {string} txHash Transaction hash
+   * @param {number} amount Amount of ETH that was sent
+   * @param {string} fromAddress Sender address
+   * @param {string} toAddress Recipient address
+   * @returns null
+   */
+  const saveTransaction = async (
+    txHash,
+    amount,
+    fromAddress = currentAccount,
+    toAddress
+  ) => {
+    const txDoc = {
+      _type: 'transactions',
+      _id: txHash,
+      fromAddress: fromAddress,
+      toAddress: toAddress,
+      timestamp: new Date(Date.now()).toISOString(),
+      txHash: txHash,
+      amount: parseFloat(amount),
+    }
+
+    await client.createIfNotExists(txDoc)
+
+    await client
+      .patch(currentAccount)
+      .setIfMissing({ transactions: [] })
+      .insert('after', 'transactions[-1]', [
+        {
+          _key: txHash,
+          _ref: txHash,
+          _type: 'reference',
+        },
+      ])
+      .commit()
+
+    return
+  }
+
+  /**
+   * Executes a transaction
+   * @param {*} metamask Injected MetaMask code from the browser
+   * @param {string} currentAccount Current user's address
+   */
   const sendTransaction = async (
     metamask = eth,
     connectedAccount = currentAccount
@@ -109,8 +182,7 @@ export const TransactionProvider = ({ children }) => {
 
       await transactionHash.wait()
 
-      // DB
-      await sendTransaction(
+      await saveTransaction(
         transactionHash.hash,
         amount,
         connectedAccount,
@@ -127,18 +199,16 @@ export const TransactionProvider = ({ children }) => {
     checkIfWalletIsConnected()
   }, [])
 
-  const handleChange = (e, name) => {
-    setFormData((prevState) => ({ ...prevState, [name]: e.target.value }))
-  }
-
   return (
     <TransactionContext.Provider
       value={{
-        currentAccount,
         connectWallet,
-        sendTransaction,
-        handleChange,
+        currentAccount,
         formData,
+        setFormData,
+        handleChange,
+        sendTransaction,
+        isLoading,
       }}
     >
       {children}

@@ -1,12 +1,13 @@
-import React, { useState, useEffect, useContext } from 'react'
 import Image from 'next/image'
+import { useEffect, useState } from 'react'
 import { FiArrowUpRight } from 'react-icons/fi'
 import { AiOutlineDown } from 'react-icons/ai'
 import { HiOutlineDotsVertical } from 'react-icons/hi'
 import ethLogo from '../assets/eth.png'
 import uniswapLogo from '../assets/uniswap.png'
+import { useContext } from 'react'
 import { TransactionContext } from '../context/TransactionContext'
-// import { client } from '../lib/sanityClient'
+import { client } from '../lib/sanityClient'
 
 const style = {
   wrapper: `p-4 w-screen flex justify-between items-center`,
@@ -25,20 +26,34 @@ const style = {
 
 const Header = () => {
   const [selectedNav, setSelectedNav] = useState('swap')
-  const [userName, setUserName] = useState('')
+  const [userName, setUserName] = useState<string>()
   const { connectWallet, currentAccount } = useContext(TransactionContext)
 
   useEffect(() => {
-    if (!currentAccount) return
-    setUserName(`${currentAccount.slice(0, 7)}...${currentAccount.slice(35)}`)
-  }, [currentAccount])
+    if (currentAccount) {
+      ;(async () => {
+        const query = `
+        *[_type=="users" && _id == "${currentAccount}"] {
+          userName,
+        }
+        `
+        const clientRes = await client.fetch(query)
 
-  console.log({ connectWallet, currentAccount })
+        if (!(clientRes[0].userName == 'Unnamed')) {
+          setUserName(clientRes[0].userName)
+        } else {
+          setUserName(
+            `${currentAccount.slice(0, 7)}...${currentAccount.slice(35)}`,
+          )
+        }
+      })()
+    }
+  }, [currentAccount])
 
   return (
     <div className={style.wrapper}>
       <div className={style.headerLogo}>
-        <Image src={uniswapLogo} alt="uniswap" height={40} width={40} />
+        <Image src={uniswapLogo} alt='uniswap' height={40} width={40} />
       </div>
       <div className={style.nav}>
         <div className={style.navItemsContainer}>
@@ -67,9 +82,9 @@ const Header = () => {
             Vote
           </div>
           <a
-            href="https://info.uniswap.org/#/"
-            target="_blank"
-            rel="noreferrer"
+            href='https://info.uniswap.org/#/'
+            target='_blank'
+            rel='noreferrer'
           >
             <div className={style.navItem}>
               Charts <FiArrowUpRight />
@@ -80,7 +95,7 @@ const Header = () => {
       <div className={style.buttonsContainer}>
         <div className={`${style.button} ${style.buttonPadding}`}>
           <div className={style.buttonIconContainer}>
-            <Image src={ethLogo} alt="eth logo" height={20} width={20} />
+            <Image src={ethLogo} alt='eth logo' height={20} width={20} />
           </div>
           <p>Ethereum</p>
           <div className={style.buttonIconContainer}>
