@@ -33,7 +33,6 @@ export const TransactionProvider = ({ children }) => {
   })
 
   // Trigger Loading Modal
-
   useEffect(() => {
     if (isLoading) {
       router.push(`/?loading={currentAccount}`)
@@ -55,6 +54,12 @@ export const TransactionProvider = ({ children }) => {
     }
   }
 
+  /**
+   * Executes a transaction
+   * @param {*} metamask Injected MetaMask code from the browser
+   * @param {string} currentAccount Current user's address
+   */
+
   const checkIfWalletIsConnected = async (metamask = eth) => {
     try {
       if (!metamask) return alert('Please install metamask ')
@@ -69,12 +74,6 @@ export const TransactionProvider = ({ children }) => {
       throw new Error('No ethereum object.')
     }
   }
-
-  /**
-   * Executes a transaction
-   * @param {*} metamask Injected MetaMask code from the browser
-   * @param {string} currentAccount Current user's address
-   */
 
   const sendTransaction = async (
     metamask = eth,
