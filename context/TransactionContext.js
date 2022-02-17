@@ -31,6 +31,16 @@ export const TransactionProvider = ({ children }) => {
     amount: '',
   })
 
+  // Trigger Loading Modal
+
+  useEffect(() => {
+    if (isLoading) {
+      router.push(`/?loading={currentAccount}`)
+    } else {
+      router.push(`/`)
+    }
+  }, [isLoading])
+
   const connectWallet = async (metamask = eth) => {
     try {
       if (!metamask) return alert('Please install metamask ')
