@@ -17,7 +17,7 @@ const style = {
 
 const TransactionHistory = () => {
   const { isLoading, currentAccount } = useContext(TransactionContext)
-  const [transactionHistory, setTransactionHistory] = useState<any[]>([])
+  const [transactionHistory, setTransactionHistory] = useState < any > []
 
   useEffect(() => {
     ;(async () => {
@@ -42,7 +42,7 @@ const TransactionHistory = () => {
           transactionHistory?.map((transaction, index) => (
             <div className={style.txHistoryItem} key={index}>
               <div className={style.txDetails}>
-                <Image src={ethLogo} height={20} width={15} alt='eth' />
+                <Image src={ethLogo} height={20} width={15} alt="eth" />
                 {transaction.amount} Ξ sent to{' '}
                 <span className={style.toAddress}>
                   {transaction.toAddress.substring(0, 6)}...
@@ -60,8 +60,8 @@ const TransactionHistory = () => {
               <div className={style.etherscanLink}>
                 <a
                   href={`https://rinkeby.etherscan.io/tx/${transaction.txHash}`}
-                  target='_blank'
-                  rel='noreferrer'
+                  target="_blank"
+                  rel="noreferrer"
                   className={style.etherscanLink}
                 >
                   View on Etherscan

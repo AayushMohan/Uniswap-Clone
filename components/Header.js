@@ -26,7 +26,7 @@ const style = {
 
 const Header = () => {
   const [selectedNav, setSelectedNav] = useState('swap')
-  const [userName, setUserName] = useState<string>()
+  const [userName, setUserName] = useState('')
   const { connectWallet, currentAccount } = useContext(TransactionContext)
 
   useEffect(() => {
@@ -43,7 +43,7 @@ const Header = () => {
           setUserName(clientRes[0].userName)
         } else {
           setUserName(
-            `${currentAccount.slice(0, 7)}...${currentAccount.slice(35)}`,
+            `${currentAccount.slice(0, 7)}...${currentAccount.slice(35)}`
           )
         }
       })()
@@ -53,7 +53,7 @@ const Header = () => {
   return (
     <div className={style.wrapper}>
       <div className={style.headerLogo}>
-        <Image src={uniswapLogo} alt='uniswap' height={40} width={40} />
+        <Image src={uniswapLogo} alt="uniswap" height={40} width={40} />
       </div>
       <div className={style.nav}>
         <div className={style.navItemsContainer}>
@@ -82,9 +82,9 @@ const Header = () => {
             Vote
           </div>
           <a
-            href='https://info.uniswap.org/#/'
-            target='_blank'
-            rel='noreferrer'
+            href="https://info.uniswap.org/#/"
+            target="_blank"
+            rel="noreferrer"
           >
             <div className={style.navItem}>
               Charts <FiArrowUpRight />
@@ -95,7 +95,7 @@ const Header = () => {
       <div className={style.buttonsContainer}>
         <div className={`${style.button} ${style.buttonPadding}`}>
           <div className={style.buttonIconContainer}>
-            <Image src={ethLogo} alt='eth logo' height={20} width={20} />
+            <Image src={ethLogo} alt="eth logo" height={20} width={20} />
           </div>
           <p>Ethereum</p>
           <div className={style.buttonIconContainer}>
