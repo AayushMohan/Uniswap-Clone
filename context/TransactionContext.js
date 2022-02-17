@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { contractABI, contractAddress } from '../lib/constants'
 import { ethers } from 'ethers'
+import { useRouter } from 'next/router'
 
 export const TransactionContext = React.createContext()
 
@@ -25,7 +26,7 @@ const getEthereumContract = () => {
 export const TransactionProvider = ({ children }) => {
   const [currentAccount, setCurrentAccount] = useState()
   const [isLoading, setIsLoading] = useState(false)
-  // const router = useRouter()
+  const router = useRouter()
   const [formData, setFormData] = useState({
     addressTo: '',
     amount: '',
