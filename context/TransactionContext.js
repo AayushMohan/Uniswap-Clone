@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { contractABI, contractAddress } from '../lib/constants'
 import { ethers } from 'ethers'
 import { client } from '../lib/sanityClient'
@@ -31,6 +31,10 @@ export const TransactionProvider = ({ children }) => {
   const [formData, setFormData] = useState({
     addressTo: '',
     amount: '',
+  })
+
+  useEffect(() => {
+    checkIfWalletIsConnected()
   })
 
   /**
@@ -202,8 +206,8 @@ export const TransactionProvider = ({ children }) => {
   return (
     <TransactionContext.Provider
       value={{
-        connectWallet,
         currentAccount,
+        connectWallet,
         formData,
         setFormData,
         handleChange,
