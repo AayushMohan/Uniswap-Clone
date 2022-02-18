@@ -82,6 +82,7 @@ export const TransactionProvider = ({ children }) => {
 
       if (accounts.length) {
         setCurrentAccount(accounts[0])
+        console.log('wallet is already connected!')
       }
     } catch (error) {
       console.error(error)
