@@ -35,7 +35,7 @@ export const TransactionProvider = ({ children }) => {
 
   useEffect(() => {
     checkIfWalletIsConnected()
-  })
+  }, [])
 
   /**
    * Trigger loading modal
@@ -187,12 +187,13 @@ export const TransactionProvider = ({ children }) => {
 
       await transactionHash.wait()
 
-      await saveTransaction(
-        transactionHash.hash,
-        amount,
-        connectedAccount,
-        addressTo
-      )
+      // DB
+      // await saveTransaction(
+      //   transactionHash.hash,
+      //   amount,
+      //   connectedAccount,
+      //   addressTo
+      // )
 
       setIsLoading(false)
     } catch (error) {
