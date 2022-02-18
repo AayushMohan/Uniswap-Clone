@@ -103,9 +103,10 @@ const Header = () => {
             <AiOutlineDown />
           </div>
         </div>
+
         {currentAccount ? (
           <div className={`${style.button} ${style.buttonPadding}`}>
-            <div className={style.buttonTextContainer}>{userName}</div>
+            <div className={style.buttonTextContainer}>0x97...531</div>
           </div>
         ) : (
           <div
@@ -117,6 +118,7 @@ const Header = () => {
             </div>
           </div>
         )}
+
         <div className={`${style.button} ${style.buttonPadding}`}>
           <div className={`${style.buttonIconContainer} mx-2`}>
             <HiOutlineDotsVertical />
