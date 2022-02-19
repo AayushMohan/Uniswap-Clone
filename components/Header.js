@@ -28,9 +28,9 @@ const Header = () => {
   const { connectWallet, currentAccount } = useContext(TransactionContext)
   const [userName, setUserName] = useState('')
 
-  // useEffect(() => {
-  //   setUserName(`${currentAccount.slice(0, 7)}...${currentAccount.slice(35)}`)
-  // }, [currentAccount])
+  useEffect(() => {
+    setUserName(`${currentAccount.slice(0, 7)}...${currentAccount.slice(35)}`)
+  }, [currentAccount])
 
   console.log({ connectWallet, currentAccount })
 
